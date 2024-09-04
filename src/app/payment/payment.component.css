@@ -1,0 +1,35 @@
+.container {
+  margin-top: 20px;
+}
+
+.top {
+  margin-bottom: 20px;
+}
+
+.table {
+  margin-bottom: 20px;
+}
+
+.btn-warning {
+  margin-top: 5px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-dialog {
+  margin: 100px auto;
+  max-width: 500px;
+}
+
+.modal-content {
+  background: #fff;
+  border-radius: 4px;
+  padding: 20px;
+}

@@ -5,6 +5,7 @@ import { FormGroup } from '@angular/forms';
 import { CalendarComponent } from '../calendar/calendar.component';
 import { Event } from '../Event';
 import { EventsService } from '../events.service';
+import { PaymentService } from '../payment.service';
 
 
 interface User {
@@ -51,10 +52,9 @@ export class AdminhomeComponent {
   //   { name: "Task 6", dueDate: "2024-09-10",  description: "In Progress" }
   // ];
 
-  constructor(private fb: FormBuilder, private eventService:EventsService) {
+  constructor(private fb: FormBuilder, private eventService:EventsService,private paymentService:PaymentService) {
     // Initialize payment form with validators
     this.paymentForm = this.fb.group({
-      user: [null, Validators.required],
       amount: ['', [Validators.required, Validators.min(1)]],
       description: ['', Validators.required]
     });
@@ -91,9 +91,11 @@ export class AdminhomeComponent {
   // Handle payment form submission
   submitPayment() {
     if (this.paymentForm.valid) {
-      const { user,amount, description } = this.paymentForm.value;
-      console.log(`Payment Request - Amount: ${amount}, Description: ${description},Name:${user.name},ID:${user.id}`);
+      const { amount, description } = this.paymentForm.value;
+      console.log(`Payment Request - Amount: ${amount}, Description: ${description}`);
       // this.resetForms();
+      
+      this.paymentService.createPaymentRequest(amount,description).subscribe(d => console.log(d));
       this.paymentForm.reset();
     }
   }

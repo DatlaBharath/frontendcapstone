@@ -36,12 +36,12 @@ interface Message {
 export class ChatComponent implements OnInit{
   chatAdminMessages : { [key: string]: Message[] } = {};
   chatDiscussionMessages : { [key: string]: Message[] } = {};
-  
+  intervalId!:any;
   chatsGroupsData!:Group[];
   chats: Chat[] = [];
   selectedChat: string ="";
   renderData(): void {
-    this.chats = [];
+    // this.chats = [];
     this.chatAdminMessages = {};
     this.chatDiscussionMessages = {};
 
@@ -49,16 +49,28 @@ export class ChatComponent implements OnInit{
         this.chatsGroupsData = d;
         console.log(this.chatsGroupsData);
 
-        this.chatsGroupsData.forEach(element => {
-            console.log(element);
+        this.chatsGroupsData.slice(this.chats.length).forEach(element => {
+          console.log(element);
 
-            this.chats.push({
-                name: element.name,
-                lastMessage: element.discussionMessages[element.discussionMessages.length - 1]?.content,
-                time: element.discussionMessages[element.discussionMessages.length - 1]?.timestamp,
-                status: "",
-                tags: element.tags
-            });
+          this.chats.push({
+              name: element.name,
+              lastMessage: element.discussionMessages[element.discussionMessages.length - 1]?.content,
+              time: element.discussionMessages[element.discussionMessages.length - 1]?.timestamp,
+              status: "",
+              tags: element.tags
+          });
+        });
+
+        this.chatsGroupsData.forEach(element => {
+            // console.log(element);
+
+            // this.chats.push({
+            //     name: element.name,
+            //     lastMessage: element.discussionMessages[element.discussionMessages.length - 1]?.content,
+            //     time: element.discussionMessages[element.discussionMessages.length - 1]?.timestamp,
+            //     status: "",
+            //     tags: element.tags
+            // });
 
             // Initialize the arrays for each chat
             this.chatAdminMessages[element.name] = [];
@@ -93,7 +105,9 @@ export class ChatComponent implements OnInit{
   constructor(private chatService:ChatService,private storageService:StorageService){}
   ngOnInit(): void {
     this.renderData();
-
+    this.intervalId = setInterval(() => {
+      this.renderData();
+    }, 5000);
     // Subscribe to WebSocket messages
     
   }

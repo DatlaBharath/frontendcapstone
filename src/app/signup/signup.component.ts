@@ -60,8 +60,10 @@ export class SignupComponent {
   }
 
   onSubmit() {
+    console.log("hey")
     if (this.isPasswordValid()) {
       let user:User = new User(this.email,this.password,this.username,Number(this.mobile));
+      console.log(user)
       this.userService.register(user).subscribe(d => {
         console.log(d)
         console.log('Email:', this.email);

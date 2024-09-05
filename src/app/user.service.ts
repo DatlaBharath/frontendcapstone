@@ -24,7 +24,7 @@ export class UserService {
     return this.http.get(this.url+"/users/user/"+email)
   }
   register(user:User): Observable<any>{
-    return this.http.post(this.url+"/users",user,{headers : this.storageService.get("header")})
+    return this.http.post(this.url+"/users",user)
     // return this.http.post(this.url+"/users",user,{headers : this.tokenService.get("header"),responseType : 'text' as 'json'})
   }
 }
